@@ -1,0 +1,22 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model EducationalContent {
+  content     String?
+  contentType EnumEducationalContentContentType?
+  createdAt   DateTime                           @default(now())
+  id          String                             @id @default(cuid())
+  title       String?
+  updatedAt   DateTime                           @updatedAt
+  userId      String?
+}
+
+enum EnumEducationalContentContentType {
+  Option1
+}
