@@ -26,18 +26,6 @@ import { User } from "./User";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserUpdateInput } from "./UserUpdateInput";
-import { EducationalContentFindManyArgs } from "../../educationalContent/base/EducationalContentFindManyArgs";
-import { EducationalContent } from "../../educationalContent/base/EducationalContent";
-import { EducationalContentWhereUniqueInput } from "../../educationalContent/base/EducationalContentWhereUniqueInput";
-import { MarketAnalysisFindManyArgs } from "../../marketAnalysis/base/MarketAnalysisFindManyArgs";
-import { MarketAnalysis } from "../../marketAnalysis/base/MarketAnalysis";
-import { MarketAnalysisWhereUniqueInput } from "../../marketAnalysis/base/MarketAnalysisWhereUniqueInput";
-import { StrategyFindManyArgs } from "../../strategy/base/StrategyFindManyArgs";
-import { Strategy } from "../../strategy/base/Strategy";
-import { StrategyWhereUniqueInput } from "../../strategy/base/StrategyWhereUniqueInput";
-import { TradeFindManyArgs } from "../../trade/base/TradeFindManyArgs";
-import { Trade } from "../../trade/base/Trade";
-import { TradeWhereUniqueInput } from "../../trade/base/TradeWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -62,13 +50,17 @@ export class UserControllerBase {
       data: data,
       select: {
         createdAt: true,
+        educationalContents: true,
         email: true,
         firstName: true,
         id: true,
         lastName: true,
+        marketAnalyses: true,
         riskTolerance: true,
         roles: true,
+        strategies: true,
         subscriptionStatus: true,
+        trades: true,
         updatedAt: true,
         username: true,
       },
@@ -93,13 +85,17 @@ export class UserControllerBase {
       ...args,
       select: {
         createdAt: true,
+        educationalContents: true,
         email: true,
         firstName: true,
         id: true,
         lastName: true,
+        marketAnalyses: true,
         riskTolerance: true,
         roles: true,
+        strategies: true,
         subscriptionStatus: true,
+        trades: true,
         updatedAt: true,
         username: true,
       },
@@ -125,13 +121,17 @@ export class UserControllerBase {
       where: params,
       select: {
         createdAt: true,
+        educationalContents: true,
         email: true,
         firstName: true,
         id: true,
         lastName: true,
+        marketAnalyses: true,
         riskTolerance: true,
         roles: true,
+        strategies: true,
         subscriptionStatus: true,
+        trades: true,
         updatedAt: true,
         username: true,
       },
@@ -166,13 +166,17 @@ export class UserControllerBase {
         data: data,
         select: {
           createdAt: true,
+          educationalContents: true,
           email: true,
           firstName: true,
           id: true,
           lastName: true,
+          marketAnalyses: true,
           riskTolerance: true,
           roles: true,
+          strategies: true,
           subscriptionStatus: true,
+          trades: true,
           updatedAt: true,
           username: true,
         },
@@ -206,13 +210,17 @@ export class UserControllerBase {
         where: params,
         select: {
           createdAt: true,
+          educationalContents: true,
           email: true,
           firstName: true,
           id: true,
           lastName: true,
+          marketAnalyses: true,
           riskTolerance: true,
           roles: true,
+          strategies: true,
           subscriptionStatus: true,
+          trades: true,
           updatedAt: true,
           username: true,
         },
@@ -225,422 +233,5 @@ export class UserControllerBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.Get("/:id/educationalContents")
-  @ApiNestedQuery(EducationalContentFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "EducationalContent",
-    action: "read",
-    possession: "any",
-  })
-  async findEducationalContents(
-    @common.Req() request: Request,
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<EducationalContent[]> {
-    const query = plainToClass(EducationalContentFindManyArgs, request.query);
-    const results = await this.service.findEducationalContents(params.id, {
-      ...query,
-      select: {
-        content: true,
-        contentType: true,
-        createdAt: true,
-        id: true,
-        title: true,
-        updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/educationalContents")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async connectEducationalContents(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: EducationalContentWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      educationalContents: {
-        connect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/educationalContents")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async updateEducationalContents(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: EducationalContentWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      educationalContents: {
-        set: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/educationalContents")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async disconnectEducationalContents(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: EducationalContentWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      educationalContents: {
-        disconnect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.Get("/:id/marketAnalyses")
-  @ApiNestedQuery(MarketAnalysisFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "MarketAnalysis",
-    action: "read",
-    possession: "any",
-  })
-  async findMarketAnalyses(
-    @common.Req() request: Request,
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<MarketAnalysis[]> {
-    const query = plainToClass(MarketAnalysisFindManyArgs, request.query);
-    const results = await this.service.findMarketAnalyses(params.id, {
-      ...query,
-      select: {
-        analysisDate: true,
-        createdAt: true,
-        id: true,
-        marketType: true,
-        summary: true,
-        updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/marketAnalyses")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async connectMarketAnalyses(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: MarketAnalysisWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      marketAnalyses: {
-        connect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/marketAnalyses")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async updateMarketAnalyses(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: MarketAnalysisWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      marketAnalyses: {
-        set: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/marketAnalyses")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async disconnectMarketAnalyses(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: MarketAnalysisWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      marketAnalyses: {
-        disconnect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.Get("/:id/strategies")
-  @ApiNestedQuery(StrategyFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Strategy",
-    action: "read",
-    possession: "any",
-  })
-  async findStrategies(
-    @common.Req() request: Request,
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<Strategy[]> {
-    const query = plainToClass(StrategyFindManyArgs, request.query);
-    const results = await this.service.findStrategies(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        description: true,
-        id: true,
-        name: true,
-        updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/strategies")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async connectStrategies(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: StrategyWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      strategies: {
-        connect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/strategies")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async updateStrategies(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: StrategyWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      strategies: {
-        set: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/strategies")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async disconnectStrategies(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: StrategyWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      strategies: {
-        disconnect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.Get("/:id/trades")
-  @ApiNestedQuery(TradeFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Trade",
-    action: "read",
-    possession: "any",
-  })
-  async findTrades(
-    @common.Req() request: Request,
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<Trade[]> {
-    const query = plainToClass(TradeFindManyArgs, request.query);
-    const results = await this.service.findTrades(params.id, {
-      ...query,
-      select: {
-        asset: true,
-        createdAt: true,
-        entryPoint: true,
-        exitPoint: true,
-        id: true,
-        profitLoss: true,
-        tradeDate: true,
-        updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/trades")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async connectTrades(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: TradeWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      trades: {
-        connect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/trades")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async updateTrades(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: TradeWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      trades: {
-        set: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/trades")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async disconnectTrades(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: TradeWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      trades: {
-        disconnect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
   }
 }

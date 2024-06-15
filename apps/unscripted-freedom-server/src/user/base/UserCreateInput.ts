@@ -11,31 +11,24 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { EducationalContentCreateNestedManyWithoutUsersInput } from "./EducationalContentCreateNestedManyWithoutUsersInput";
-import { ValidateNested, IsOptional, IsString, IsEnum } from "class-validator";
-import { Type } from "class-transformer";
-import { MarketAnalysisCreateNestedManyWithoutUsersInput } from "./MarketAnalysisCreateNestedManyWithoutUsersInput";
-import { EnumUserRiskTolerance } from "./EnumUserRiskTolerance";
 import { IsJSONValue } from "../../validators";
+import { IsOptional, IsString, IsEnum } from "class-validator";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { StrategyCreateNestedManyWithoutUsersInput } from "./StrategyCreateNestedManyWithoutUsersInput";
+import { EnumUserRiskTolerance } from "./EnumUserRiskTolerance";
 import { EnumUserSubscriptionStatus } from "./EnumUserSubscriptionStatus";
-import { TradeCreateNestedManyWithoutUsersInput } from "./TradeCreateNestedManyWithoutUsersInput";
 
 @InputType()
 class UserCreateInput {
   @ApiProperty({
     required: false,
-    type: () => EducationalContentCreateNestedManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => EducationalContentCreateNestedManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => EducationalContentCreateNestedManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  educationalContents?: EducationalContentCreateNestedManyWithoutUsersInput;
+  educationalContents?: InputJsonValue;
 
   @ApiProperty({
     required: false,
@@ -72,15 +65,13 @@ class UserCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => MarketAnalysisCreateNestedManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => MarketAnalysisCreateNestedManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => MarketAnalysisCreateNestedManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  marketAnalyses?: MarketAnalysisCreateNestedManyWithoutUsersInput;
+  marketAnalyses?: InputJsonValue;
 
   @ApiProperty({
     required: true,
@@ -110,15 +101,13 @@ class UserCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => StrategyCreateNestedManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => StrategyCreateNestedManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => StrategyCreateNestedManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  strategies?: StrategyCreateNestedManyWithoutUsersInput;
+  strategies?: InputJsonValue;
 
   @ApiProperty({
     required: false,
@@ -133,15 +122,13 @@ class UserCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => TradeCreateNestedManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => TradeCreateNestedManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => TradeCreateNestedManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  trades?: TradeCreateNestedManyWithoutUsersInput;
+  trades?: InputJsonValue;
 
   @ApiProperty({
     required: true,

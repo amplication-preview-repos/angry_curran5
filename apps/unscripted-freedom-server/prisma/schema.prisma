@@ -7,75 +7,22 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model MarketAnalysis {
-  analysisDate DateTime?
-  createdAt    DateTime                      @default(now())
-  id           String                        @id @default(cuid())
-  marketType   EnumMarketAnalysisMarketType?
-  summary      String?
-  updatedAt    DateTime                      @updatedAt
-  user         User?                         @relation(fields: [userId], references: [id])
-  userId       String?
-}
-
-model Trade {
-  asset      String?
-  createdAt  DateTime  @default(now())
-  entryPoint Float?
-  exitPoint  Float?
-  id         String    @id @default(cuid())
-  profitLoss Float?
-  tradeDate  DateTime?
-  updatedAt  DateTime  @updatedAt
-  user       User?     @relation(fields: [userId], references: [id])
-  userId     String?
-}
-
-model EducationalContent {
-  content     String?
-  contentType EnumEducationalContentContentType?
-  createdAt   DateTime                           @default(now())
-  id          String                             @id @default(cuid())
-  title       String?
-  updatedAt   DateTime                           @updatedAt
-  user        User?                              @relation(fields: [userId], references: [id])
-  userId      String?
-}
-
-model Strategy {
-  createdAt   DateTime @default(now())
-  description String?
-  id          String   @id @default(cuid())
-  name        String?
-  updatedAt   DateTime @updatedAt
-  user        User?    @relation(fields: [userId], references: [id])
-  userId      String?
-}
-
 model User {
   createdAt           DateTime                    @default(now())
-  educationalContents EducationalContent[]
+  educationalContents Json?
   email               String?                     @unique
   firstName           String?
   id                  String                      @id @default(cuid())
   lastName            String?
-  marketAnalyses      MarketAnalysis[]
+  marketAnalyses      Json?
   password            String
   riskTolerance       EnumUserRiskTolerance?
   roles               Json
-  strategies          Strategy[]
+  strategies          Json?
   subscriptionStatus  EnumUserSubscriptionStatus?
-  trades              Trade[]
+  trades              Json?
   updatedAt           DateTime                    @updatedAt
   username            String                      @unique
-}
-
-enum EnumMarketAnalysisMarketType {
-  Option1
-}
-
-enum EnumEducationalContentContentType {
-  Option1
 }
 
 enum EnumUserRiskTolerance {

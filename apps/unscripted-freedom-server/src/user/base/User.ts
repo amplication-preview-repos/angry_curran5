@@ -11,23 +11,13 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import {
-  IsDate,
-  ValidateNested,
-  IsOptional,
-  IsString,
-  IsEnum,
-} from "class-validator";
+import { IsDate, IsOptional, IsString, IsEnum } from "class-validator";
 import { Type } from "class-transformer";
-import { EducationalContent } from "../../educationalContent/base/EducationalContent";
-import { MarketAnalysis } from "../../marketAnalysis/base/MarketAnalysis";
-import { EnumUserRiskTolerance } from "./EnumUserRiskTolerance";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
-import { Strategy } from "../../strategy/base/Strategy";
+import { EnumUserRiskTolerance } from "./EnumUserRiskTolerance";
 import { EnumUserSubscriptionStatus } from "./EnumUserSubscriptionStatus";
-import { Trade } from "../../trade/base/Trade";
 
 @ObjectType()
 class User {
@@ -41,12 +31,13 @@ class User {
 
   @ApiProperty({
     required: false,
-    type: () => [EducationalContent],
   })
-  @ValidateNested()
-  @Type(() => EducationalContent)
+  @IsJSONValue()
   @IsOptional()
-  educationalContents?: Array<EducationalContent>;
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  educationalContents!: JsonValue;
 
   @ApiProperty({
     required: false,
@@ -91,12 +82,13 @@ class User {
 
   @ApiProperty({
     required: false,
-    type: () => [MarketAnalysis],
   })
-  @ValidateNested()
-  @Type(() => MarketAnalysis)
+  @IsJSONValue()
   @IsOptional()
-  marketAnalyses?: Array<MarketAnalysis>;
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  marketAnalyses!: JsonValue;
 
   @ApiProperty({
     required: false,
@@ -118,12 +110,13 @@ class User {
 
   @ApiProperty({
     required: false,
-    type: () => [Strategy],
   })
-  @ValidateNested()
-  @Type(() => Strategy)
+  @IsJSONValue()
   @IsOptional()
-  strategies?: Array<Strategy>;
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  strategies!: JsonValue;
 
   @ApiProperty({
     required: false,
@@ -138,12 +131,13 @@ class User {
 
   @ApiProperty({
     required: false,
-    type: () => [Trade],
   })
-  @ValidateNested()
-  @Type(() => Trade)
+  @IsJSONValue()
   @IsOptional()
-  trades?: Array<Trade>;
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  trades!: JsonValue;
 
   @ApiProperty({
     required: true,

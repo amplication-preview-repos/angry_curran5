@@ -4,42 +4,23 @@ import {
   Edit,
   SimpleForm,
   EditProps,
-  ReferenceArrayInput,
-  SelectArrayInput,
   TextInput,
   PasswordInput,
   SelectInput,
+  SelectArrayInput,
 } from "react-admin";
 
-import { EducationalContentTitle } from "../educationalContent/EducationalContentTitle";
-import { MarketAnalysisTitle } from "../marketAnalysis/MarketAnalysisTitle";
-import { StrategyTitle } from "../strategy/StrategyTitle";
-import { TradeTitle } from "../trade/TradeTitle";
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const UserEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
-        <ReferenceArrayInput
-          source="educationalContents"
-          reference="EducationalContent"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={EducationalContentTitle} />
-        </ReferenceArrayInput>
+        <div />
         <TextInput label="Email" source="email" type="email" />
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
-        <ReferenceArrayInput
-          source="marketAnalyses"
-          reference="MarketAnalysis"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={MarketAnalysisTitle} />
-        </ReferenceArrayInput>
+        <div />
         <PasswordInput label="Password" source="password" />
         <SelectInput
           source="riskTolerance"
@@ -55,14 +36,7 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           optionText="label"
           optionValue="value"
         />
-        <ReferenceArrayInput
-          source="strategies"
-          reference="Strategy"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={StrategyTitle} />
-        </ReferenceArrayInput>
+        <div />
         <SelectInput
           source="subscriptionStatus"
           label="subscriptionStatus"
@@ -71,14 +45,7 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           allowEmpty
           optionValue="value"
         />
-        <ReferenceArrayInput
-          source="trades"
-          reference="Trade"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={TradeTitle} />
-        </ReferenceArrayInput>
+        <div />
         <TextInput label="Username" source="username" />
       </SimpleForm>
     </Edit>

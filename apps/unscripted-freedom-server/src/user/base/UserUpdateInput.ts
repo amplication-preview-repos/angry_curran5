@@ -11,31 +11,24 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { EducationalContentUpdateManyWithoutUsersInput } from "./EducationalContentUpdateManyWithoutUsersInput";
-import { ValidateNested, IsOptional, IsString, IsEnum } from "class-validator";
-import { Type } from "class-transformer";
-import { MarketAnalysisUpdateManyWithoutUsersInput } from "./MarketAnalysisUpdateManyWithoutUsersInput";
-import { EnumUserRiskTolerance } from "./EnumUserRiskTolerance";
 import { IsJSONValue } from "../../validators";
+import { IsOptional, IsString, IsEnum } from "class-validator";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { StrategyUpdateManyWithoutUsersInput } from "./StrategyUpdateManyWithoutUsersInput";
+import { EnumUserRiskTolerance } from "./EnumUserRiskTolerance";
 import { EnumUserSubscriptionStatus } from "./EnumUserSubscriptionStatus";
-import { TradeUpdateManyWithoutUsersInput } from "./TradeUpdateManyWithoutUsersInput";
 
 @InputType()
 class UserUpdateInput {
   @ApiProperty({
     required: false,
-    type: () => EducationalContentUpdateManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => EducationalContentUpdateManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => EducationalContentUpdateManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  educationalContents?: EducationalContentUpdateManyWithoutUsersInput;
+  educationalContents?: InputJsonValue;
 
   @ApiProperty({
     required: false,
@@ -72,15 +65,13 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => MarketAnalysisUpdateManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => MarketAnalysisUpdateManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => MarketAnalysisUpdateManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  marketAnalyses?: MarketAnalysisUpdateManyWithoutUsersInput;
+  marketAnalyses?: InputJsonValue;
 
   @ApiProperty({
     required: false,
@@ -116,15 +107,13 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => StrategyUpdateManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => StrategyUpdateManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => StrategyUpdateManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  strategies?: StrategyUpdateManyWithoutUsersInput;
+  strategies?: InputJsonValue;
 
   @ApiProperty({
     required: false,
@@ -139,15 +128,13 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => TradeUpdateManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => TradeUpdateManyWithoutUsersInput)
+  @IsJSONValue()
   @IsOptional()
-  @Field(() => TradeUpdateManyWithoutUsersInput, {
+  @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  trades?: TradeUpdateManyWithoutUsersInput;
+  trades?: InputJsonValue;
 
   @ApiProperty({
     required: false,

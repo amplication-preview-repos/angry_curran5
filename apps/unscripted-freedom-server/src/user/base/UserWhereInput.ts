@@ -11,30 +11,26 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { EducationalContentListRelationFilter } from "../../educationalContent/base/EducationalContentListRelationFilter";
-import { ValidateNested, IsOptional, IsEnum } from "class-validator";
+import { JsonFilter } from "../../util/JsonFilter";
 import { Type } from "class-transformer";
+import { IsOptional, IsEnum } from "class-validator";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
-import { MarketAnalysisListRelationFilter } from "../../marketAnalysis/base/MarketAnalysisListRelationFilter";
 import { EnumUserRiskTolerance } from "./EnumUserRiskTolerance";
-import { StrategyListRelationFilter } from "../../strategy/base/StrategyListRelationFilter";
 import { EnumUserSubscriptionStatus } from "./EnumUserSubscriptionStatus";
-import { TradeListRelationFilter } from "../../trade/base/TradeListRelationFilter";
 
 @InputType()
 class UserWhereInput {
   @ApiProperty({
     required: false,
-    type: () => EducationalContentListRelationFilter,
+    type: JsonFilter,
   })
-  @ValidateNested()
-  @Type(() => EducationalContentListRelationFilter)
+  @Type(() => JsonFilter)
   @IsOptional()
-  @Field(() => EducationalContentListRelationFilter, {
+  @Field(() => JsonFilter, {
     nullable: true,
   })
-  educationalContents?: EducationalContentListRelationFilter;
+  educationalContents?: JsonFilter;
 
   @ApiProperty({
     required: false,
@@ -82,15 +78,14 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => MarketAnalysisListRelationFilter,
+    type: JsonFilter,
   })
-  @ValidateNested()
-  @Type(() => MarketAnalysisListRelationFilter)
+  @Type(() => JsonFilter)
   @IsOptional()
-  @Field(() => MarketAnalysisListRelationFilter, {
+  @Field(() => JsonFilter, {
     nullable: true,
   })
-  marketAnalyses?: MarketAnalysisListRelationFilter;
+  marketAnalyses?: JsonFilter;
 
   @ApiProperty({
     required: false,
@@ -105,15 +100,14 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => StrategyListRelationFilter,
+    type: JsonFilter,
   })
-  @ValidateNested()
-  @Type(() => StrategyListRelationFilter)
+  @Type(() => JsonFilter)
   @IsOptional()
-  @Field(() => StrategyListRelationFilter, {
+  @Field(() => JsonFilter, {
     nullable: true,
   })
-  strategies?: StrategyListRelationFilter;
+  strategies?: JsonFilter;
 
   @ApiProperty({
     required: false,
@@ -128,15 +122,14 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => TradeListRelationFilter,
+    type: JsonFilter,
   })
-  @ValidateNested()
-  @Type(() => TradeListRelationFilter)
+  @Type(() => JsonFilter)
   @IsOptional()
-  @Field(() => TradeListRelationFilter, {
+  @Field(() => JsonFilter, {
     nullable: true,
   })
-  trades?: TradeListRelationFilter;
+  trades?: JsonFilter;
 
   @ApiProperty({
     required: false,

@@ -26,14 +26,6 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
-import { EducationalContentFindManyArgs } from "../../educationalContent/base/EducationalContentFindManyArgs";
-import { EducationalContent } from "../../educationalContent/base/EducationalContent";
-import { MarketAnalysisFindManyArgs } from "../../marketAnalysis/base/MarketAnalysisFindManyArgs";
-import { MarketAnalysis } from "../../marketAnalysis/base/MarketAnalysis";
-import { StrategyFindManyArgs } from "../../strategy/base/StrategyFindManyArgs";
-import { Strategy } from "../../strategy/base/Strategy";
-import { TradeFindManyArgs } from "../../trade/base/TradeFindManyArgs";
-import { Trade } from "../../trade/base/Trade";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -138,87 +130,5 @@ export class UserResolverBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [EducationalContent], {
-    name: "educationalContents",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "EducationalContent",
-    action: "read",
-    possession: "any",
-  })
-  async findEducationalContents(
-    @graphql.Parent() parent: User,
-    @graphql.Args() args: EducationalContentFindManyArgs
-  ): Promise<EducationalContent[]> {
-    const results = await this.service.findEducationalContents(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [MarketAnalysis], { name: "marketAnalyses" })
-  @nestAccessControl.UseRoles({
-    resource: "MarketAnalysis",
-    action: "read",
-    possession: "any",
-  })
-  async findMarketAnalyses(
-    @graphql.Parent() parent: User,
-    @graphql.Args() args: MarketAnalysisFindManyArgs
-  ): Promise<MarketAnalysis[]> {
-    const results = await this.service.findMarketAnalyses(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [Strategy], { name: "strategies" })
-  @nestAccessControl.UseRoles({
-    resource: "Strategy",
-    action: "read",
-    possession: "any",
-  })
-  async findStrategies(
-    @graphql.Parent() parent: User,
-    @graphql.Args() args: StrategyFindManyArgs
-  ): Promise<Strategy[]> {
-    const results = await this.service.findStrategies(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [Trade], { name: "trades" })
-  @nestAccessControl.UseRoles({
-    resource: "Trade",
-    action: "read",
-    possession: "any",
-  })
-  async findTrades(
-    @graphql.Parent() parent: User,
-    @graphql.Args() args: TradeFindManyArgs
-  ): Promise<Trade[]> {
-    const results = await this.service.findTrades(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
   }
 }

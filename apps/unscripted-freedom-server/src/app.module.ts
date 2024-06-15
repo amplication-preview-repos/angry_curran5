@@ -1,8 +1,4 @@
 import { Module } from "@nestjs/common";
-import { MarketAnalysisModule } from "./marketAnalysis/marketAnalysis.module";
-import { TradeModule } from "./trade/trade.module";
-import { EducationalContentModule } from "./educationalContent/educationalContent.module";
-import { StrategyModule } from "./strategy/strategy.module";
 import { UserModule } from "./user/user.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
@@ -21,10 +17,6 @@ import { AuthModule } from "./auth/auth.module";
   imports: [
     ACLModule,
     AuthModule,
-    MarketAnalysisModule,
-    TradeModule,
-    EducationalContentModule,
-    StrategyModule,
     UserModule,
     HealthModule,
     PrismaModule,
